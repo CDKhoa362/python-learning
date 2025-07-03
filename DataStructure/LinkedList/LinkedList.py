@@ -271,6 +271,7 @@ class LinkedList:
         temp = self.head
         self.head = self.tail
         self.tail = temp
+        
         after = temp.next
         before = None
 
