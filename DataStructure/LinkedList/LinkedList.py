@@ -284,6 +284,53 @@ class LinkedList:
             before = temp
             temp = after
 
+    def reverse_between(self, start_index, end_index):
+        
+        if not isinstance(start_index, int) or not isinstance(end_index, int):
+            return False
+        if start_index < 0 or end_index < 0:
+            return False
+        if start_index >= self.length or end_index >= self.length:
+            return False
+        if start_index == end_index:
+            return None
+        if start_index > end_index:
+            start_index, end_index = end_index, start_index
+
+        dummy_node = Node(0)
+        dummy_node.next = self.head
+        
+        prev = dummy_node
+        for _ in range(start_index):
+            prev = prev.next
+
+        current = prev.next
+        for _ in range(end_index - start_index):
+            to_move = current.next
+            
+            current.next = to_move.next
+            to_move.next = prev.next
+            prev.next = to_move
+        
+        # Cập nhật lại head
+        self.head = dummy_node.next
+        
+        # Cập lại tail
+        new_tail = self.head
+        while new_tail and new_tail.next:
+            new_tail = new_tail.next
+        self.tail = new_tail
+        
+        return True
+
+
+
+
+        
+        
+
+
+
     def find_middle_node(self):
         """
             Find and return the middle node of the singly linked list.
