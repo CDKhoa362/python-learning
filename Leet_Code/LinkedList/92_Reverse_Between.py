@@ -40,10 +40,4 @@ class Solution(object):
             to_move.next = prev.next
             prev.next = to_move
         return dummy_node.next
-
-
-
-
-
-        
         
