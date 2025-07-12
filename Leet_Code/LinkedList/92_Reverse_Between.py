@@ -39,5 +39,6 @@ class Solution(object):
             current.next = to_move.next
             to_move.next = prev.next
             prev.next = to_move
+            
         return dummy_node.next
         

@@ -225,6 +225,88 @@ class DoubleLinkedList:
 
         self.length -= 1
         return temp
+    
+    def reverse(self):
+
+        if self.length <= 1:
+            return self.head
+
+        current = self.head
+        new_head = None
+
+        while current:
+            current.prev, current.next = current.next, current.prev # Đảo ngược con trỏ prev, next
+            new_head = current
+            current = current.prev
+
+        old_head = self.head
+        self.head = new_head
+        self.head.prev = None
+
+        self.tail = old_head
+        self.tail.next = None
+
+
+    def partition_list(self, x):
+        if self.length <= 1:
+            return self.head
+    
+        # Node giả
+        dummy1 = Node(0)
+        dummy2 = Node(0)
+
+        current1 = dummy1
+        current2 = dummy2
+        
+        temp = self.head
+        while temp:
+            next_node = temp.next
+
+            # Tách node đang đứng hiện tại ra khỏi danh sách gốc
+            temp.next = None
+            temp.prev = None
+
+            # Phân loại Node
+            if temp.value < x:
+                
+                # Nối node temp hiện tại vào current1 với Node < x
+                current1.next = temp
+                temp.prev = current1
+                current1 = temp
+            else:
+
+                # Nối node temp hiện tại vào current2 với Node >= x
+                current2.next = temp
+                temp.prev = current2
+                current2 = temp 
+            
+            # Di chuyển temp lên 1 bước ở danh sách gốc.
+            temp = next_node
+
+        # Ghép dummy1 vào dummy2 (cuối dummy1 vào đầu dummy2)
+        current1.next = dummy2.next
+        if dummy2.next:
+            dummy2.next.prev = current1
+
+        # Cập nhật lại head
+        self.head = dummy1.next
+        if self.head:
+            self.head.prev = None
+
+            # Cập nhật lại tail (vì dummy2 có thể rỗng nên phải duyệt lại)
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+
+            self.tail = temp
+            self.tail.next = None
+
+        return self.head
+
+        
+
+
+
 
           
 
